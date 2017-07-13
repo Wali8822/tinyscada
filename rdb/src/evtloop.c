@@ -86,7 +86,7 @@ void elMainLoop(struct elEventLoop *el) {
 		FD_ZERO(&rSet);
 		FD_ZERO(&wSet);
 
-		for (i = 0; i < el->maxfd; ++i) {
+		for (i = 0; i <= el->maxfd; ++i) {
 			if (el->evts[i].mask & EL_READ){
 				FD_SET(i, &rSet);
 			} 
@@ -99,7 +99,7 @@ void elMainLoop(struct elEventLoop *el) {
 		ret = select(el->maxfd, &rSet, &wSet, NULL, NULL);
 
 		if (ret > 0){
-			for (i = 0; i < el->maxfd; ++i) {
+			for (i = 0; i <= el->maxfd; ++i) {
 				if (FD_ISSET(i, &rSet) && el->evts[i].rFunc) {
 					el->evts[i].rFunc(el, i, el->evts[i].privatedata);
 				}
