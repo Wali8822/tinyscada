@@ -11,10 +11,14 @@
 #include <Windows.h>
 
 
-int listenToPort(unsigned short port, int *fds, int *count) {
-	char portName[8];
+OD_RET acceptConnection(OD_I32 servfd) {
+	return OD_SUCCESS;
+}
+
+OD_RET listenToPort(OD_U16 port, OD_I32 *fds, OD_I32 *count) {
+	OD_CHAR portName[8];
 	struct addrinfo hints, *res, *ptr;
-	int ret;
+	OD_I32 ret;
 
 	*count = 0;
 
@@ -26,7 +30,7 @@ int listenToPort(unsigned short port, int *fds, int *count) {
 
 	if ((ret = getaddrinfo(NULL, portName, &hints, &res)) != 0) {
 		fprintf(stderr, "getaddrinfo error: %s.\n", gai_strerror(ret));
-		return -1;
+		return OD_FAILURE;
 	}
 
 	for (ptr = res; ptr; ptr = ptr->ai_next){
@@ -38,13 +42,13 @@ int listenToPort(unsigned short port, int *fds, int *count) {
 
 		if (bind(fds[*count], ptr->ai_addr, ptr->ai_addrlen) != 0) {
 			fprintf(stderr, "bind error");
-			close(fds[*count]);
+			closesocket(fds[*count]);
 			continue;
 		}
 
 		if (listen(fds[*count], 32) != 0) {
 			fprintf(stderr, "listen error");
-			close(fds[*count]);
+			closesocket(fds[*count]);
 			continue;
 		}
 
@@ -53,5 +57,5 @@ int listenToPort(unsigned short port, int *fds, int *count) {
 
 	freeaddrinfo(res);
 
-	return 0;
+	return OD_SUCCESS;
 }

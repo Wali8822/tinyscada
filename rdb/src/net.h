@@ -8,9 +8,12 @@
 extern "C" {
 #endif // __cplusplus
 
-int acceptConnection(int servfd);
+#include "glbtypes.h"
 
-int listenToPort(unsigned short port, int *fds, int *count);
+
+OD_RET acceptConnection(OD_I32 servfd);
+
+OD_RET listenToPort(OD_U16 port, OD_I32 *fds, OD_I32 *count);
 
 #ifdef __cplusplus
 }

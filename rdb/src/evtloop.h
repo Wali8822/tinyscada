@@ -8,45 +8,54 @@
 extern "C" {
 #endif
 
-#define EL_OK	0
-#define EL_FAIL	-1
+#include "glbtypes.h"
 
-#define EL_NONE		0x00
-#define EL_READ		0x01
-#define EL_WRITE	0x02
-#define EL_RW		0x03
+/**
+  * Event Loop Flags
+  */
+#define ELF_NONE		0x00
+#define ELF_READ		0x01
+#define ELF_WRITE		0x02
+#define ELF_RW			0x03
 
 struct elEventLoop;
 
-typedef void (*elFileProc) (struct elEventLoop * el, int fd, void * data);
+typedef OD_VOID (*elFileProc) (struct elEventLoop * el, OD_I32 fd, OD_U16 mask, OD_VOID *data);
 
-struct elFileEvent{
-	unsigned int mask;
+typedef struct elFileEvent{
+	OD_U16 mask;	/*OD_(READ|WRITE)*/
 
 	elFileProc	rFunc;
 	elFileProc	wFunc;
 	void *privatedata;
-} ;
+} elFileEvent;
+
+typedef struct elFiredEvent {
+	OD_I32	fd;
+	OD_U16	mask;
+} elFiredEvent;
+
+typedef struct elEventLoop{
+	OD_I32		size;
+	OD_I32		maxfd;
+
+	elFileEvent		*events;
+	elFiredEvent	*fireds;
+
+	OD_BOOLEAN	stop;
+
+	OD_VOID	*api_data;
+} elEventLoop;
 
 
-struct elEventLoop{
-	int size;
-	struct elFileEvent	*	evts;
+elEventLoop	*elCreateEventLoop(OD_I32 size);
+OD_VOID elDestroy(elEventLoop *el);
 
-	int maxfd;
+OD_RET elAddFileEvent(elEventLoop *el, OD_I32 fd, OD_U16 mask, elFileProc proc, OD_VOID *priv);
+OD_VOID elDelFileEvent(elEventLoop *el, OD_I32 fd, OD_U16 mask);
 
-	int stop;
-} ;
-
-
-struct elEventLoop	*elCreate(int size);
-void elDestroy(struct elEventLoop *el);
-
-int elAddFileEvent(struct elEventLoop *el, int fd, unsigned int mask, elFileProc proc);
-void elDelFileEvent(struct elEventLoop *el, int fd);
-
-void elStop(struct elEventLoop *el);
-void elMainLoop(struct elEventLoop *el);
+OD_VOID elStop(elEventLoop *el);
+OD_VOID elMainLoop(elEventLoop *el);
 
 #ifdef __cplusplus
 }
