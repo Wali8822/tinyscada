@@ -21,7 +21,7 @@ typedef struct dictOperation {
 	OD_I32(*hashFunc)(OD_VOID *key);
 	OD_I32(*keyComp)(OD_VOID *priv_data, OD_VOID *key1, OD_VOID *key2);
 	OD_VOID* (*keyDup)(OD_VOID *priv_data, OD_VOID *key);
-	OD_VOID* (*valDup)(OD_VOID *priv_data, OD_VOID *key);
+	OD_VOID* (*valDup)(OD_VOID *priv_data, OD_VOID *val);
 	OD_VOID(*keyDestructor)(OD_VOID *priv_data, OD_VOID *key);
 	OD_VOID(*valDestructor)(OD_VOID *priv_data, OD_VOID *val);
 } dictOperation;

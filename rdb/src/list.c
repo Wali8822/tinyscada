@@ -18,6 +18,18 @@ list *listCreate(){
 	return l;
 }
 
+OD_VOID	listDestroy(list *l) {
+	if (l) {
+		list_iter *iter = list_begin(l);
+		node *	tmp;
+		while (iter && (tmp = iter_next(iter))) {
+			l->free_func(tmp);
+		}
+
+		free(l);
+	}
+}
+
 void listAddHead(list *l, node *n) {
 	if (l->_count == 0) {
 		l->head = l->tail = n;
@@ -62,3 +74,28 @@ void listDel(list *l, node *n) {
 	--l->_count;
 }
 
+list_iter *list_begin(list *l) {
+	list_iter *iter = (list_iter*)malloc(sizeof(list_iter));
+
+	if (iter) {
+		iter->iter = l->head;
+	}
+
+	return iter;
+}
+
+node *iter_next(list_iter *iter) {
+	node *tmp = iter->iter;
+
+	if (iter->iter) {
+		iter->iter = iter->iter->next;
+	}
+
+	return tmp;
+}
+
+OD_VOID list_end(list_iter *iter) {
+	if (iter) {
+		free(iter);
+	}
+}

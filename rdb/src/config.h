@@ -8,9 +8,13 @@
 extern "C" {
 #endif
 
+#include "glbtypes.h"
+
 
 typedef struct config {
-	unsigned short c_port;		/*服务端监听端口号*/
+	OD_U16	c_port;		/*服务端监听端口号*/
+
+	OD_SIZE	c_dbVolume;	/*dict的初始大小*/
 } config;
 
 

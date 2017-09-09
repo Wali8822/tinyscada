@@ -26,7 +26,6 @@ void dbDestroy(rdb *db) {
 	}
 }
 
-
 void dbAdd(rdb *db, robj *key, robj *value) {
 	dictAdd(db->dict, key->ptr, value->ptr);
 }

@@ -1,16 +1,12 @@
 
 
 
-#include <stdlib.h>
-#include <stdio.h>
-
-#include <WinSock2.h>
-#include <WS2tcpip.h>
-
+#include "sysincs.h"
 #include "dict.h"
 #include "net.h"
 #include "evtloop.h"
 #include "rdb.h"
+#include "key.h"
 
 
 int main(int argc, char *argv[]) {

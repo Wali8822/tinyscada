@@ -20,6 +20,7 @@ typedef struct _intObj{
 intObj	*intObjCreate(OD_I32 value);
 OD_VOID intObjDestroy(intObj *iObj);
 
+intObj	*decIntObj(OD_U8 *pdu, OD_U8 pdu_len);
 
 #ifdef __cplusplus
 }

@@ -14,9 +14,9 @@ static dictOperation devKeyOp = {
 	hash_dev_key,
 	cmp_dev_key,
 	dup_dev_key,
-	NULL,
+	dup_obj,
 	destruct_dev_key,
-	NULL
+	destruct_obj
 };
 
 OD_VOID serverAccept(struct elEventLoop * el, OD_I32 fd, OD_U16 mask, OD_VOID *data) {

@@ -8,6 +8,7 @@
 extern "C" {
 #endif
 
+#include "rdb.h"
 #include "list.h"
 #include "glbtypes.h"
 
@@ -18,6 +19,10 @@ typedef struct _client{
 
 	OD_I32	fd;
 	OD_U8	recv_buff[4096];
+
+	rdb		*db;
+
+	list	*ops_pending;
 } client;
 
 
