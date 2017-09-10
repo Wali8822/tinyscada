@@ -24,6 +24,8 @@ OD_VOID serverAccept(struct elEventLoop * el, OD_I32 fd, OD_U16 mask, OD_VOID *d
 	client	*c;
 
 	clifd = accept(fd, NULL, NULL);
+	if (clifd < 0) { return; }
+
 	c = clientCreate(clifd);
 
 	if (!c) {
