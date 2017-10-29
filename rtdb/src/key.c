@@ -14,7 +14,7 @@
 OD_I32 hash_dev_key(OD_VOID *key){
 	dev_key *dk = (dev_key*)key;
 
-	return dk->dev_addr << 16 | dk->grp << 8 | dk->item;
+	return dk->dev_addr;
 }
 
 OD_VOID *dup_dev_key(OD_VOID *pd, OD_VOID *key) {
@@ -23,8 +23,6 @@ OD_VOID *dup_dev_key(OD_VOID *pd, OD_VOID *key) {
 
 	if (new_key){
 		new_key->dev_addr = old_key->dev_addr;
-		new_key->grp = old_key->grp;
-		new_key->item = old_key->item;
 	}
 
 	return new_key;
@@ -41,19 +39,6 @@ OD_I32 cmp_dev_key(OD_VOID *pd, OD_VOID *key1, OD_VOID *key2) {
 		return 1;											/*great*/
 	} else if(dk1->dev_addr < dk2->dev_addr) {
 		return -1;											/*less*/
-	}
-
-	/*dev_addr equal*/
-	if (dk1->grp > dk2->grp) {
-		return 1;
-	} else if (dk1->grp < dk2->grp) {
-		return -1;
-	}
-
-	if (dk1->item > dk2->item) {
-		return 1;
-	} else if (dk1->item < dk2->item) {
-		return -1;
 	}
 
 	return 0;

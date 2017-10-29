@@ -9,6 +9,9 @@
 #define	INIT_HASH_SIZE		(1024)
 #define	INVALID_INDEX		(-1)
 
+#define	ERR_KEY_EXIST		(0x7001)
+#define	ERR_MEMORY			(0x7002)
+
 
 typedef struct dictEntry{
 	OD_VOID *key;

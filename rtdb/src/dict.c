@@ -32,9 +32,7 @@ dict* dictCreate(OD_SIZE size, dictOperation *op, OD_VOID *priv_data) {
 	d->dictOp	 = op;
 	d->priv_data = priv_data;
 
-	if (size == 0) {
-		size = INIT_HASH_SIZE;
-	}
+	if (size == 0) { size = INIT_HASH_SIZE; }
 
 	d->size = size;
 	d->sizemask = size - 1;
@@ -58,7 +56,7 @@ DICT_CREAT_ERR:
 
 dictEntry *dictFind(dict *d, OD_VOID *key) {
 	OD_I32 hash = d->dictOp->hashFunc(key);
-	OD_I32 idx = hash & (d->size - 1);
+	OD_I32 idx = hash & d->sizemask;
 	dictEntry *he;
 
 	he = d->table[idx];
@@ -94,13 +92,13 @@ OD_RET dictAdd(dict *d, OD_VOID *key, OD_VOID *val) {
 	dictEntry	*entry;
 	OD_I32		index;
 
-	if ((index = _dictKeyIndex(d, key)) == -1) {		/*key 已经存在*/
-		return OD_FAILURE;
+	if ((index = _dictKeyIndex(d, key)) == INVALID_INDEX) {		/*key 已经存在*/
+		return ERR_KEY_EXIST;
 	}
 
 	entry = calloc(1, sizeof(dictEntry));
 	if (!entry){
-		return -1;
+		return ERR_MEMORY;
 	}
 
 	entry->next = d->table[index];
@@ -130,6 +128,7 @@ OD_VOID *dictGet(dict *d, OD_VOID *key) {
 		if (d->dictOp->keyComp(d->priv_data, he->key, key) == 0) {
 			return he->val;
 		}
+
 		he = he->next;
 	}
 

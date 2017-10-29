@@ -9,9 +9,9 @@ extern "C" {
 
 
 
-	/*****************************************************/
-	/******通用定义，所有平台都适用******/
-	/*****************************************************/
+/*****************************************************/
+/******通用定义，所有平台都适用******/
+/*****************************************************/
 
 #define OD_TRUE			1
 #define OD_FALSE		0
@@ -21,11 +21,6 @@ extern "C" {
 #define OD_LITTLE_ENDIAN		1
 
 #define UNUSED(arg)			(void)(arg)
-
-#define SAFE_FREE(ptr)	\
-	do {\
-		if (ptr) free(ptr); \
-	} while (0)
 
 #define	OD_FAILED(ret)		((ret) != OD_SUCCESS)
 #define OD_SUCCED(ret)		((ret) == OD_SUCCESS)

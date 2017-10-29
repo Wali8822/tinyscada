@@ -11,11 +11,8 @@ extern "C" {
 
 #include "glbtypes.h"
 
-
 typedef struct dev_key{
 	OD_I32 dev_addr;
-	OD_I32 grp;
-	OD_I32 item;
 } dev_key;
 
 
